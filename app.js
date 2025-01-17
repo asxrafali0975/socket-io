@@ -6,6 +6,15 @@ const { connect } = require('http2')
 
 socket.broadcast.emit('event_name', data); // excluding the sender
 
+// Add client to a room:
+socket.join('room_name');
+
+// Send a message to the room (includes all clients in the room, including the sender):
+io.to('room_name').emit('event_name', data);
+
+// Broadcast to room (excluding the sender):
+socket.to('room_name').emit('event_name', data);
+
 
 
 // ALL INITIALIZATIONS
