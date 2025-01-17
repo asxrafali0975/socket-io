@@ -4,6 +4,8 @@ const http = require("http")
 const { disconnect } = require('process')
 const { connect } = require('http2')
 
+socket.broadcast.emit('event_name', data); // excluding the sender
+
 
 
 // ALL INITIALIZATIONS
