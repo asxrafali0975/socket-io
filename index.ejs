@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div>
+    <input type="text" placeholder="type id" id="id">
+    <input type="text" placeholder="type message" id="message">
+    <button onclick="func()">sendmessage</button>
+
+    <div id="messaegebox">messaege box</div>
+    <div id="connected_users">connectedusers</div>
+    
+</div>
+
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+<script>
+
+let textbox = document.querySelector("#textbox")
+let box =document.querySelector("#messaegebox")
+let Userbox =document.querySelector("#connected_users")
+const socket = io()
+
+socket.on("connected_Users",(data)=>{
+    let recievedid=data.UserID
+    let lis=document.createElement("li")
+    lis.innerHTML=recievedid
+    Userbox.appendChild(lis)
+    
+})
+
+let func=()=>{
+    let id = document.querySelector("#id")
+    let message = document.querySelector("#message")
+    
+
+    socket.emit("send_to_personal",{id:id.value,message:message.value})
+
+    
+
+}
+
+
+
+socket.on("personal_message",(re)=>{
+    let message = document.querySelector("#messaegebox")
+    let lis=document.createElement("li")
+    lis.innerHTML=`from : ${re.from} : ${re.msg}`
+    message.appendChild(lis)
+
+    })
+
+
+</script>
+</body>
+</html>
